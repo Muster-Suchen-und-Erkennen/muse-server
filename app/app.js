@@ -344,6 +344,11 @@ app.get('/kostuembasiselemente', require('./routes/kostuembasiselement').index);
 // statistics
 app.get('/statistic', require('./routes/statistics').general);
 
+// taxonomies
+app.get('/taxonomies', require('./routes/taxonomies').updateableTaxonomies);
+app.post('/taxonomies/:taxonomy', require('./routes/taxonomies').addTaxonomyElement);
+app.delete('/taxonomies/:taxonomy/:name', require('./routes/taxonomies').deleteTaxonomyElement);
+
 // all Costumes
 app.get('/kostueme', require('./routes/kostuem').indexFull);
 
