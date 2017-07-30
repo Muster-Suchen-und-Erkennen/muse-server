@@ -8,18 +8,19 @@ var genericUtils = require('./dbGenericUtils');
 var taxonomies = {
     '': { type: 'list', tableName: '', columnName: '' },
     't': { type: 'tree', tableName: '', columnName: '', parentColumnName: '' },
+    'Basiselement': { type: 'tree', tableName: 'BasiselementDomaene', columnName: 'BasiselementName', parentColumnName: 'UebergeordnetesElement' },
 };
 
 function updateableTaxonomies() {
     var deferred = Q.defer();
 
-    var taxonomies = [];
+    var updateableTaxonomies = [];
 
     Object.keys(taxonomies).forEach(function (name) {
-        taxonomies.list.push({ name: name, type: taxonomies[name].type });
+        updateableTaxonomies.push({ name: name, type: taxonomies[name].type });
     });
 
-    deferred.resolve(taxonomies);
+    deferred.resolve(updateableTaxonomies);
 
     return deferred.promise;
 }
