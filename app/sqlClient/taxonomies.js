@@ -5,28 +5,18 @@ var Q = require('q');
 var resultUtils = require('./dbResultUtils');
 var genericUtils = require('./dbGenericUtils');
 
-var listTaxonomies = {
-    '': {tableName:'', columnName:''},
-};
-
-var treeTaxonomies = {
-    '': {tableName:'', columnName:'', parentColumnName:''},
+var taxonomies = {
+    '': { type: 'list', tableName: '', columnName: '' },
+    't': { type: 'tree', tableName: '', columnName: '', parentColumnName: '' },
 };
 
 function updateableTaxonomies() {
     var deferred = Q.defer();
 
-    var taxonomies = {
-        list: [],
-        tree: []
-    };
+    var taxonomies = [];
 
-    Object.keys(listTaxonomies).forEach(function(name) {
-        taxonomies.list.push(name);
-    });
-
-    Object.keys(treeTaxonomies).forEach(function(name) {
-        taxonomies.tree.push(name);
+    Object.keys(taxonomies).forEach(function (name) {
+        taxonomies.list.push({ name: name, type: taxonomies[name].type });
     });
 
     deferred.resolve(taxonomies);
@@ -38,18 +28,17 @@ function updateableTaxonomies() {
 function deleteTaxonomyElement(taxonomy, name) {
     var deferred = Q.defer();
 
-    var taxonomyInfo = listTaxonomies[taxonomy];
+    var taxonomyInfo = taxonomies[taxonomy];
 
     if (taxonomyInfo) {
-        return genericUtils.deleteElementMappings(taxonomyInfo.tableName, taxonomyInfo.columnName, name);
-    } else {
-        taxonomyInfo = treeTaxonomies[taxonomy];
-        if (taxonomyInfo) {
+        if (taxonomyInfo.type === 'list') {
             return genericUtils.deleteElementMappings(taxonomyInfo.tableName, taxonomyInfo.columnName, name);
         } else {
-            deferred.reject('Unknown taxonomy ' + taxonomy);
-            return deferred.promise;
+            return genericUtils.deleteElementMappings(taxonomyInfo.tableName, taxonomyInfo.columnName, name);
         }
+    } else {
+        deferred.reject('Unknown taxonomy ' + taxonomy);
+        return deferred.promise;
     }
 }
 
@@ -57,25 +46,23 @@ function deleteTaxonomyElement(taxonomy, name) {
 function addTaxonomyElement(taxonomy, element) {
     var deferred = Q.defer();
 
-    var taxonomyInfo = listTaxonomies[taxonomy];
+    var taxonomyInfo = taxonomies[taxonomy];
 
     if (taxonomyInfo) {
         var mapping = {};
-        mapping[taxonomyInfo.columnName] = element.name;
+        if (taxonomyInfo.type === 'list') {
+            mapping[taxonomyInfo.columnName] = element.name;
 
-        return genericUtils.createElementTripleMapping(taxonomyInfo.tableName, mapping);
-    } else {
-        taxonomyInfo = treeTaxonomies[taxonomy];
-        if (taxonomyInfo) {
-            var mapping = {};
+            return genericUtils.createElementTripleMapping(taxonomyInfo.tableName, mapping);
+        } else {
             mapping[taxonomyInfo.columnName] = element.name;
             mapping[taxonomyInfo.parentColumnName] = element.parent;
 
             return genericUtils.createElementTripleMapping(taxonomyInfo.tableName, mapping);
-        } else {
-            deferred.reject('Unknown taxonomy ' + taxonomy);
-            return deferred.promise;
         }
+    } else {
+        deferred.reject('Unknown taxonomy ' + taxonomy);
+        return deferred.promise;
     }
 }
 
