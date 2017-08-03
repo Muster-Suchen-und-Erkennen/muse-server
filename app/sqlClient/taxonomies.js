@@ -32,11 +32,7 @@ function deleteTaxonomyElement(taxonomy, name) {
     var taxonomyInfo = taxonomies[taxonomy];
 
     if (taxonomyInfo) {
-        if (taxonomyInfo.type === 'list') {
-            return genericUtils.deleteElementMappings(taxonomyInfo.tableName, taxonomyInfo.columnName, name);
-        } else {
-            return genericUtils.deleteElementMappings(taxonomyInfo.tableName, taxonomyInfo.columnName, name);
-        }
+        return genericUtils.deleteElementMappings(taxonomyInfo.tableName, taxonomyInfo.columnName, name);
     } else {
         deferred.reject('Unknown taxonomy ' + taxonomy);
         return deferred.promise;

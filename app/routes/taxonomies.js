@@ -2,6 +2,7 @@
 
 var logger = require("../util/logger");
 var db = require('../sqlClient/mysqlclient').dbClient;
+var q = require('q');
 
 function isTaxonomyAdmin(req, res) {
     var authToken = req.headers.authorization.split('Bearer ')[1];
@@ -14,10 +15,16 @@ function isTaxonomyAdmin(req, res) {
             if (role === 'TaxAdmin') {
                 isTaxonomyAdmin.resolve(true);
                 return isTaxonomyAdmin.promise;
+                //return true;
             }
-        }, genericError);
+        }, function (err) {
+            res.status(501).send('Error while retrieving user roles.');
+        });
         isTaxonomyAdmin.resolve(false);
+
         return isTaxonomyAdmin.promise;
+    }, function (err) {
+        res.status(501).send('Error while retrieving user roles.');
     });
 }
 
@@ -39,8 +46,8 @@ exports.addTaxonomyElement = function(req, res){
             db.addTaxonomyElement(req.params.taxonomy, body).then(function () {
                 res.status(200).end();
             }, function (err) {
-                logger.log('Error while retrieving adding new taxonomy element.');
-                res.status(501).send('Error while retrieving adding new taxonomy element.');
+                logger.log('Error while adding new taxonomy element.');
+                res.status(501).send('Error while adding new taxonomy element.');
             });
         } else {
             res.status(403).send('Only taxonomy admins can edit taxonomies.');
@@ -55,8 +62,8 @@ exports.deleteTaxonomyElement = function(req, res){
             db.deleteTaxonomyElement(req.params.taxonomy, req.params.name).then(function () {
                 res.status(200).end();
             }, function (err) {
-                logger.log('Error while retrieving deleting taxonomy element.');
-                res.status(501).send('Error while retrieving deleting taxonomy element.');
+                logger.log('Error while deleting taxonomy element.');
+                res.status(501).send('Error while deleting taxonomy element.');
             });
         } else {
             res.status(403).send('Only taxonomy admins can edit taxonomies.');
