@@ -6,9 +6,19 @@ var resultUtils = require('./dbResultUtils');
 var genericUtils = require('./dbGenericUtils');
 
 var taxonomies = {
-    '': { type: 'list', tableName: '', columnName: '' },
-    't': { type: 'tree', tableName: '', columnName: '', parentColumnName: '' },
+    //'': { type: 'list', tableName: '', columnName: '' },
+    //'t': { type: 'tree', tableName: '', columnName: '', parentColumnName: '' },
     'Basiselement': { type: 'tree', tableName: 'BasiselementDomaene', columnName: 'BasiselementName', parentColumnName: 'UebergeordnetesElement' },
+    'Genre': { type: 'tree', tableName: 'GenreDomaene', columnName: 'GenreName', parentColumnName: 'UebergeordnetesElement' },
+    'Körpermodifikationen': { type: 'tree', tableName: 'KoerpermodifikationsDomaene', columnName: 'KoerpermodifikationsName', parentColumnName: 'UebergeordnetesElement' },
+    'Material': { type: 'tree', tableName: 'MaterialDomaene', columnName: 'MaterialName', parentColumnName: 'UebergeordnetesElement' },
+    'Produktionsort': { type: 'tree', tableName: 'ProduktionsortDomaene', columnName: 'ProduktionsortName', parentColumnName: 'UebergeordnetesElement' },
+    'Beruf': { type: 'tree', tableName: 'RollenberufDomaene', columnName: 'RollenberufName', parentColumnName: 'UebergeordnetesElement' },
+    'Spielort': { type: 'tree', tableName: 'SpielortDomaene', columnName: 'SpielortName', parentColumnName: 'UebergeordnetesElement' },
+    'Spielort (Detail)': { type: 'tree', tableName: 'SpielortDetailDomaene', columnName: 'SpielortDetailName', parentColumnName: 'UebergeordnetesElement' },
+    'Spielzeit': { type: 'tree', tableName: 'SpielzeitDomaene', columnName: 'SpielzeitName', parentColumnName: 'UebergeordnetesElement' },
+    'Stereotyp': { type: 'tree', tableName: 'StereotypDomaene', columnName: 'StereotypName', parentColumnName: 'UebergeordnetesElement' },
+    'Teilelement': { type: 'tree', tableName: 'TeilelementDomaene', columnName: 'TeilelementName', parentColumnName: 'UebergeordnetesElement' },
 };
 
 function updateableTaxonomies() {
