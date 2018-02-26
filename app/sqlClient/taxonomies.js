@@ -34,7 +34,7 @@ var taxonomies = {
     'Körperteil': { type: 'tree', editable: false, tableName: 'KoerperteilDomaene', columnName: 'Koerperteilname', parentColumnName: 'UebergeordnetesElement' },
     'Dominante Charaktereigenschaft': { type: 'tree', editable: false, tableName: 'TypusDomaene', columnName: 'TypusName', parentColumnName: 'UebergeordnetesElement' },
 
-    'Materialeindruck': { type: 'list', tableName: 'MaterialeindruckDomaene', columnName: 'Materialeindruckname' },
+    'Materialeindruck': { type: 'list', editable: false, tableName: 'MaterialeindruckDomaene', columnName: 'Materialeindruckname' },
     'Farbeindruck': { type: 'list', editable: false, tableName: 'FarbeindruckDomaene', columnName: 'Farbeindruckname' },
 };
 
