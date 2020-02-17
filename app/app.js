@@ -344,6 +344,9 @@ app.get('/kostuembasiselemente', require('./routes/kostuembasiselement').index);
 // statistics
 app.get('/statistic', require('./routes/statistics').general);
 
+// diagnostics
+app.get('/diagnostic', require('./routes/diagnostics').general);
+
 // taxonomies
 app.get('/taxonomies', require('./routes/taxonomies').updateableTaxonomies);
 app.post('/taxonomies/:taxonomy', require('./routes/taxonomies').addTaxonomyElement);

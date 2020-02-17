@@ -17,6 +17,7 @@ var baseelement = require('./baseelement');
 var primitive = require('./primitive');
 var dbGenericUtils = require('./dbGenericUtils');
 var statistics = require('./statistics');
+var diagnostics = require('./diagnostics');
 var taxonomies = require('./taxonomies');
 var users = require('./users');
 
@@ -93,6 +94,10 @@ var client = {
     colorsPrimitive: statistics.colorsPrimitive,
     materialsBaseElement: statistics.materialsBaseElement,
     materialsPrimitive: statistics.materialsPrimitive,
+    //diagnostics
+    rolesWithoutStereotype: diagnostics.rolesWithoutStereotype,
+    rolesWithoutDominantCharacter: diagnostics.rolesWithoutDominantCharacter,
+    costumesWithoutDominantColorOrState: diagnostics.costumesWithoutDominantColorOrState,
     //taxonomies
     updateableTaxonomies: taxonomies.updateableTaxonomies,
     deleteTaxonomyElement: taxonomies.deleteTaxonomyElement,
