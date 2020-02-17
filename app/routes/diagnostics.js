@@ -11,15 +11,15 @@ exports.general = function(req, res){
     };
 
     db.rolesWithoutStereotype().then(function (result) {
-        statistic.rolesWithoutStereotype = result;
+        diagnostics.rolesWithoutStereotype = result;
         return db.rolesWithoutDominantCharacter();
     }).then(function (result) {
-        statistic.rolesWithoutDominantCharacter = result;
+        diagnostics.rolesWithoutDominantCharacter = result;
         return db.costumesWithoutDominantColorOrState();
     }).then(function (result) {
-        statistic.costumesWithoutDominantColorOrState = result;
+        diagnostics.costumesWithoutDominantColorOrState = result;
     }).then(function (end) {
-        res.status(200).send(statistic);
+        res.status(200).send(diagnostics);
     });
 
 };
